@@ -28,17 +28,18 @@ def co2_list():
             row = cursor.fetchone()
             if row is None:
                 abort(400)
-            else:
-                table = get_km_row(km[a])
-                if table is -1 or row[table] is None:
-                    abort(400)
-                else:
-                    response['Aircraft_number'] = item
-                    response['km'] = km[a]
-                    co2 = row[table]
-                    response['co2:'] = co2
-                    result.append(response)
-                    a = a + 1
+
+            table = get_km_row(km[a])
+
+            if table is -1 or row[table] is None:
+                abort(400)
+
+            response['Aircraft_number'] = item
+            response['km'] = km[a]
+            co2 = row[table]
+            response['co2:'] = co2
+            result.append(response)
+            a = a + 1
 
     return jsonify(result)
 
