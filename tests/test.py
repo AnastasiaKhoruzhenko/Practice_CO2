@@ -25,6 +25,13 @@ class BasicTests(unittest.TestCase):
             self.assertEqual(len(distance), 2)
             self.assertEqual(aircraft, ['100', '141'])
 
+    def test_wrong_request(self):
+        with app.test_request_context('?aircraft=100&distance=125'):
+            aircraft = get_splitted_array('aircraft')
+            distance = get_splitted_array('distance')
+            res = get_info_from_database(aircraft, distance)
+            self.assertEqual(res, [{"Aircraft_number": "100", "co2": 1296, "km": "125"}])
+
 
 if __name__ == "__main__":
     unittest.main()
